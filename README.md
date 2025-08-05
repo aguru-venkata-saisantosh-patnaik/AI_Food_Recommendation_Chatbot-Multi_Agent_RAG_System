@@ -508,13 +508,14 @@ graph TD
     B --> C[Slot Extraction]
     C --> D[Memory Update]
     D --> E{Sufficient Info?}
-    E -->|No| F[Response Generation]
-    F --> G[Continue Conversation]
-    E -->|Yes| H[Query Enhancement]
-    H --> I[Sharded Retrieval]
-    I --> J[Two-Stage Reranking]
-    J --> K[Final Recommendations]
-    K --> L[Response with Results]
+    E -->|No| F[Response Generation to obtain additional information]
+    F --> A
+    E -->|Yes| H[Ask for Confirmation]
+    H --> I[Query Enhancement]
+    I --> J[Sharded Retrieval]
+    J --> K[Two-Stage Reranking]
+    K --> L[Final Recommendations]
+    L --> M[Response with Results]
 ```
 
 ### **Input/Output Flow at Each Stage**
