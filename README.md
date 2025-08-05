@@ -518,6 +518,29 @@ graph TD
     L --> M[Response with Results]
 ```
 
+### **Complete Recommendation Pipeline 2**
+
+```mermaid
+graph TD
+    A[User Input] --> B[Conversational Agent]
+    B --> C[Intent Classification]
+    C--> D[Slot Extraction]
+    D--> E[Memory Updation]
+    E--> B
+    B--> F[Check for Sufficient Information]
+    F-->|NO| A
+    F-->|YES| G[Retrieval Agent]
+    G--> H[Query Enhancer]
+    H--> I[Retrieval from Shards]
+    I--> G
+    G--> J[Reranking Agent]
+    J--> K[Two Stage Reranking]
+    K--> |FINAL RECOMMENDATIONS|J
+    J--> L[Output]
+    L-->|USER NOT SATISFIED|A
+```
+
+
 ### **Input/Output Flow at Each Stage**
 
 #### **Stage 1: User Input Processing**
