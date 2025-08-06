@@ -13,7 +13,7 @@ The **AI Food Recommendation Chatbot** is a sophisticated multi-agent system aim
    Users engage the chatbot with food-related queries or preferences (e.g., “Show me spicy veg biryani under 300”).
 
 2. **Conversational Agent:**  
-   - **Intent Classification:** Determines if the user wants a new recommendation, updates filters, etc.
+   - **Intent Classification:** Determines the intent of the user like greeting, clarification, feedback, goodbye, filter update etc. 
    - **Slot Extraction:** Extracts structured information from the conversation (dietary, cuisine, dish, price, etc.).
    - **Memory Updation:** Updates session memory to retain preferences and context.
 
@@ -37,7 +37,7 @@ The **AI Food Recommendation Chatbot** is a sophisticated multi-agent system aim
 ### 1. **Conversational Agent**
 - **File:** `conversation_agent.py`
   - **Intent Classification:** Uses LLMs and fallback pattern recognition (`intent_classifier.py`) to detect user goals.
-  - **Slot Extraction:** Employs prompt-based extraction plus robust rules (`slot_extract.py`, `query_enhancer.py`).
+  - **Slot Extraction:** Employs prompt-based extraction plus robust rules (`slot_extract.py`).
   - **Memory Management:** Maintains stateful conversation context (`memory.py`).
   - **Output:** A set of structured preferences and clear user intent, enabling smooth pipeline orchestration.
 
@@ -46,7 +46,7 @@ The **AI Food Recommendation Chatbot** is a sophisticated multi-agent system aim
 - **Diagram Mapping:** The central diamond; if information is incomplete, prompts the user; otherwise, triggers retrieval and reranking.
 
 ### 3. **Retrieval Agent**
-- **Files:** `shards_retrieval.py`, (functions also exposed via `orchestrator.py`)
+- **Files:** `shards_retrieval.py`
   - **Query Refinement:** Structures and optimizes semantic queries using `query_enhancer.py`.
   - **Sharded Retrieval:** Searches distributed ChromaDB shards via dense embeddings (`embeddings.py`), ensuring speed and scalability.
 
@@ -56,7 +56,7 @@ The **AI Food Recommendation Chatbot** is a sophisticated multi-agent system aim
   - **Explainability:** Outputs condition reasoning and QA, making the selection process transparent and defensible.
 
 ### 5. **Embeddings & Shard Creation**
-- **Files:** `embeddings.py`, `embedd_3.ipynb`, `shards_retrieval.py`
+- **Files:** `embeddings.py`, `shards_creation.ipynb`, `shards_retrieval.py`
   - **Embeddings:** Utilizes sentence-transformers to vectorize each food/menu item for semantic similarity.
   - **Sharding:** Splits large databases into efficient “shards” for fast, parallel retrieval.
 
@@ -77,7 +77,7 @@ The **AI Food Recommendation Chatbot** is a sophisticated multi-agent system aim
 | `query_enhancer.py`                  | Refines and builds advanced queries and filters for retrieval         |
 | `shards_retrieval.py`                | Executes distributed, parallel semantic search via ChromaDB shards     |
 | `embeddings.py`                      | Handles embedding model setup and vector generation                   |
-| `embedd_3.ipynb`                     | Stepwise guide to generate embeddings and shard databases             |
+| `shards_creation.ipynb`                     | Stepwise guide to generate embeddings and shard databases             |
 | `rerank.py`, `rerank_prompts.py`     | Contextual re-ranking and reasoning/validation logic                  |
 | `user_clustering_agent.py`           | User persona recognition for enhanced recommendations                 |
 | `User_Clustering_agent.ipynb`        | Clustering model training/testing pipeline                            |
@@ -87,13 +87,6 @@ The **AI Food Recommendation Chatbot** is a sophisticated multi-agent system aim
 | `orchestrator.py`                    | Ties all agents together; runs config, workflow, and agent init       |
 | `utils.py`                           | Core enums, helper functions, configuration constants                 |
 
-## **How the Components Work Together**
-
-- Conversations flow through the **Conversational Agent**, which extracts intent, slots, and maintains memory for multi-turn dialogues.
-- Once enough preferences are gathered, the **Retrieval Agent** turns these into optimized, context-rich search queries.
-- These queries search a semantic **vector DB** distributed in **shards** (for efficiency)—returning a candidate set of food items.
-- The **Re-ranking Agent** processes retrieved items, using the user’s session context, journey, and explainable conditions to select the most fitting top 10.
-- **User Clustering** and **engineered data features** guide personalization at every recommendation step, ensuring suggestions match both explicit and implicit user traits, habits, and history.
 
 ## **Major Data & Model Preparation Steps**
 
