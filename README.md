@@ -10,7 +10,7 @@ The **AI Food Recommendation Chatbot** is a sophisticated multi-agent system aim
 ### **Workflow Steps**
 
 1. **User Input:**  
-   Users engage the chatbot with food-related queries or preferences (e.g., “Show me spicy veg biryani under 300”).
+   - Users engage the chatbot with food-related queries or preferences (e.g., “Show me spicy veg biryani under 300”).
 
 2. **Conversational Agent:**  
    - **Intent Classification:** Determines the intent of the user like greeting, clarification, feedback, goodbye, filter update etc. 
