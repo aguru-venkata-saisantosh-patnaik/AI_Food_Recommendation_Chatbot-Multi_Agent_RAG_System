@@ -5,10 +5,7 @@
 The **AI Food Recommendation Chatbot** is a sophisticated multi-agent system aimed at providing **personalized, context-aware food recommendations** through natural conversation. Built upon a Retrieval-Augmented Generation (RAG) paradigm, the system leverages advanced user modeling, conversational memory, semantic retrieval, and explainable reranking to optimize food suggestions for individual users. Its modular agents, robust data engineering, and user clustering ensure relevance, scalability, and adaptability for varying user behaviors and food contexts.
 
 ## **Workflow Overview**
-
 <img width="3840" height="2160" alt="Intent Classification" src="https://github.com/user-attachments/assets/9487b2cb-fb7f-4dc3-99ef-eb42dbffb6a0" />
-
-
 ### **Workflow Steps**
 
 1. **User Input:**  
@@ -100,10 +97,10 @@ The **AI Food Recommendation Chatbot** is a sophisticated multi-agent system aim
 ## **Major Data & Model Preparation Steps**
 
 - **Data Sources:**  
-  The recommendations and logic within this system are powered by the following primary datasets:
-  Food Recommendation CSV (schemersays)
-  Zomato Restaurants Dataset (bharathdevanaboina)
-  Zomato Database (anas123siddiqui)
+  The recommendations and logic within this system are powered by the following primary datasets from kaggle:
+  Food Recommendation CSV (schemersays): "https://www.kaggle.com/datasets/schemersays/food-recommendation-system?select=1662574418893344.csv"
+  Zomato Restaurants Dataset (bharathdevanaboina): "https://www.kaggle.com/datasets/bharathdevanaboina/zomato-restaurants-dataset/data"
+  Zomato Database (anas123siddiqui): "https://www.kaggle.com/datasets/anas123siddiqui/zomato-database"
 - **Data Cleaning:**  
   Datasets are cleaned, deduplicated, and joined for quality and reliability.
 - **Feature Engineering:**  
@@ -114,11 +111,4 @@ The **AI Food Recommendation Chatbot** is a sophisticated multi-agent system aim
   K++ Means-trained clusters assign users to personas that guide ranking and filtering logic.
 
 
-## **License & Credits**
 
-- Built with: OpenAI, HuggingFace, LangChain, ChromaDB, Scikit-learn, Pandas, NumPy
-- Data: Prepared and cleaned from scraped and real-world food/restaurant datasets
-
-[17] https://ppl-ai-file-upload.s3.amazonaws.com/web/direct-files/attachments/50423328/d02cd232-c7c2-4a20-bfd8-b1f395a620b6/zomato_restaurant_data_cleaning.ipynb
-[18] https://ppl-ai-file-upload.s3.amazonaws.com/web/direct-files/attachments/images/50423328/9b64d14c-0a9e-433e-bd1e-031ccf6bed7f/Intent-Classification.jpg
-[19] https://ppl-ai-file-upload.s3.amazonaws.com/web/direct-files/attachments/50423328/27bbe009-0970-41b2-a399-e89bf3ac780c/embedd_3.ipynb
