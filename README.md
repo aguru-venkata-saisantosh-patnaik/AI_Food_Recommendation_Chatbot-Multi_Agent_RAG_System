@@ -12,6 +12,12 @@ Our solution addresses this challenge by building an intelligent, conversational
 ### **Multi-Agent Conversational AI System**
 This project implements a sophisticated **multi-agent AI framework** that combines **Retrieval-Augmented Generation (RAG)** with conversational memory management to deliver personalized food recommendations. The system breaks down complex recommendation tasks across specialized AI agents, each handling specific aspects of the conversation and recommendation pipeline.
 
+
+<img width="2392" height="425" alt="image" src="https://github.com/user-attachments/assets/774b0902-8286-40e7-bdf2-3cdbd964ccd7" />
+
+
+
+
 ### **Core Components Overview**
 
 The system consists of **13 interconnected modules** that work together to provide seamless, context-aware food recommendations:
