@@ -6,6 +6,7 @@ The **AI Food Recommendation Chatbot** is a sophisticated multi-agent system aim
 
 ## **Workflow Overview**
 <img width="3840" height="2160" alt="Intent Classification" src="https://github.com/user-attachments/assets/9487b2cb-fb7f-4dc3-99ef-eb42dbffb6a0" />
+
 ### **Workflow Steps**
 
 1. **User Input:**  
