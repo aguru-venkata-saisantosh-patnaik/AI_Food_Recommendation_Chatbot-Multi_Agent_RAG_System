@@ -99,9 +99,9 @@ The **AI Food Recommendation Chatbot** is a sophisticated multi-agent system aim
 
 - **Data Sources:**  
   The recommendations and logic within this system are powered by the following primary datasets from kaggle:
-  Food Recommendation CSV (schemersays): "https://www.kaggle.com/datasets/schemersays/food-recommendation-system?select=1662574418893344.csv"
-  Zomato Restaurants Dataset (bharathdevanaboina): "https://www.kaggle.com/datasets/bharathdevanaboina/zomato-restaurants-dataset/data"
-  Zomato Database (anas123siddiqui): "https://www.kaggle.com/datasets/anas123siddiqui/zomato-database"
+    - Food Recommendation CSV (schemersays): "https://www.kaggle.com/datasets/schemersays/food-recommendation-system?select=1662574418893344.csv"
+    - Zomato Restaurants Dataset (bharathdevanaboina): "https://www.kaggle.com/datasets/bharathdevanaboina/zomato-restaurants-dataset/data"
+    - Zomato Database (anas123siddiqui): "https://www.kaggle.com/datasets/anas123siddiqui/zomato-database"
 - **Data Cleaning:**  
   Datasets are cleaned, deduplicated, and joined for quality and reliability.
 - **Feature Engineering:**  
