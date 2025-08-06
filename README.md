@@ -1,4 +1,3 @@
-# RAG-Enabled-Multi-Agent-AI-Food-Preference-Prediction-Chatbot
 # AI Food Recommendation Chatbot: Multi-Agent RAG System
 
 ## 🎯 Problem Statement
@@ -13,7 +12,7 @@ Our solution addresses this challenge by building an intelligent, conversational
 This project implements a sophisticated **multi-agent AI framework** that combines **Retrieval-Augmented Generation (RAG)** with conversational memory management to deliver personalized food recommendations. The system breaks down complex recommendation tasks across specialized AI agents, each handling specific aspects of the conversation and recommendation pipeline.
 
 
-<img width="2392" height="425" alt="image" src="https://github.com/user-attachments/assets/774b0902-8286-40e7-bdf2-3cdbd964ccd7" />
+
 
 
 
@@ -68,19 +67,6 @@ Our system leverages multiple comprehensive datasets sourced from Kaggle to buil
 - **Purpose**: Training user clustering and preference models
 - **Features**: Demographics, ordering history, preference patterns
 
-### **Data Integration Architecture**
-
-The system implements a **sharded storage approach** using **ChromaDB** for efficient retrieval:
-
-```
-📁 shard_data/
-├── shard_1/ (North Indian Cuisine)
-├── shard_2/ (South Indian Cuisine) 
-├── shard_3/ (Continental & Italian)
-├── shard_4/ (Fast Food & Snacks)
-├── shard_5/ (Desserts & Beverages)
-└── shard_paths.txt (Shard configuration)
-```
 
 ## 🔧 Data Cleaning and Feature Engineering
 
@@ -508,44 +494,7 @@ class RecommenderOrchestrator:
 
 ### **Complete Recommendation Pipeline**
 
-```mermaid
-graph TD
-    A[User Input] --> B[Intent Classification]
-    B --> C[Slot Extraction]
-    C --> D[Memory Update]
-    D --> E{Sufficient Info?}
-    E -->|No| F[Response Generation to obtain additional information]
-    F --> A
-    E -->|Yes| H[Ask for Confirmation]
-    H --> I[Query Enhancement]
-    I --> J[Sharded Retrieval]
-    J --> K[Two-Stage Reranking]
-    K --> L[Final Recommendations]
-    L --> M[Response with Results]
-```
-
-### **Complete Recommendation Pipeline 2**
-
-```mermaid
-graph TD
-    A[User Input] --> B[Conversational Agent]
-    B --> C[Intent Classification]
-    C--> D[Slot Extraction]
-    D--> E[Memory Updation]
-    E--> B
-    B--> F[Check for Sufficient Information]
-    F-->|NO| A
-    F-->|YES| G[Retrieval Agent]
-    G--> H[Query Enhancer]
-    H--> I[Retrieval from Shards]
-    I--> G
-    G--> J[Reranking Agent]
-    J--> K[Two Stage Reranking]
-    K--> |FINAL RECOMMENDATIONS|J
-    J--> L[Output]
-    L-->|USER NOT SATISFIED|A
-```
-
+<img width="2392" height="425" alt="image" src="https://github.com/user-attachments/assets/774b0902-8286-40e7-bdf2-3cdbd964ccd7" />
 
 ### **Input/Output Flow at Each Stage**
 
