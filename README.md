@@ -32,6 +32,16 @@ The **AI Food Recommendation Chatbot** is a sophisticated multi-agent system aim
 6. **Output:**  
    - Presents recommendations or further clarifying questions to the user, looping until satisfaction.
 
+## **Folder Description**
+- **Python Files:** This folder contains all the files related to running the program. Each part of the code is made in a modular way to make future changes easy.
+- **User_clustering_file:** This folder contains all the files related to the user clustering module (K++ means trained algorithm).
+- **Application:** This folder contains all the files related to the front-end made using gradio and its connection to the orchestrator.
+- **Data Cleaning and Feature Engineering:** This folder contains all the files related to the preprocessing of the datasets and the feature engineering.
+- **Embedding and Shards Creation:** This folder contains all the files related to embedding of the data and making of the shards. The link to the shards made is given at the end.
+- **Demo_final_compressed.mp4**: This is the demo video which contains the full run of the application showing 2 scenarios of various inputs.
+- **Case_presentation.pdf**: This is the presentation showcasing the importance, usability and findings of this project.
+- **Report.pdf**: This is the detailed report explaining the various technical aspects of this projects.
+
 ## **Solution Architecture**
 
 ### 1. **Conversational Agent**
@@ -79,13 +89,13 @@ The **AI Food Recommendation Chatbot** is a sophisticated multi-agent system aim
 | `embeddings.py`                      | Handles embedding model setup and vector generation                   |
 | `shards_creation.ipynb`                     | Stepwise guide to generate embeddings and shard databases             |
 | `rerank.py`, `rerank_prompts.py`     | Contextual re-ranking and reasoning/validation logic                  |
-| `user_clustering_agent.py`           | User persona recognition for enhanced recommendations                 |
-| `User_Clustering_agent.ipynb`        | Clustering model training/testing pipeline                            |
+| `User_Clustering_agent.ipynb`        | Clustering model training/testing pipeline and User persona recognition for enhanced recommendations                           |
 | `derived_feature_engineering.ipynb`  | Data augmentation for features (ratios, groupings, etc.)              |
 | `2-cuisines.ipynb`                   | Cuisine feature merging and exploration                               |
 | `zomato_restaurant_data_cleaning.ipynb`| Cleans, standardizes and joins all food/restaurant data               |
 | `orchestrator.py`                    | Ties all agents together; runs config, workflow, and agent init       |
 | `utils.py`                           | Core enums, helper functions, configuration constants                 |
+| `app.py`                           | contains the frontend made with gradio and connects to the orchestrator                 |
 
 ## **How the Components Work Together**
 
@@ -97,12 +107,15 @@ The **AI Food Recommendation Chatbot** is a sophisticated multi-agent system aim
 
 ## **Major Data & Model Preparation Steps**
 
-- **Data Cleaning:**  
-  Datasets are cleaned, deduplicated, and joined for quality and reliability.
+- **Data Sources and cleaning:**
+   - Food Recommendation CSV (schemersays): "https://www.kaggle.com/datasets/schemersays/food-recommendation-system?select=1662574418893344.csv"
+   - Zomato Restaurants Dataset (bharathdevanaboina): "https://www.kaggle.com/datasets/bharathdevanaboina/zomato-restaurants-dataset/data"
+   - Zomato Database (anas123siddiqui): "https://www.kaggle.com/datasets/anas123siddiqui/zomato-database?select=restaurant.csv"
+  These Datasets are further cleaned, deduplicated, and joined for quality and reliability.
 - **Feature Engineering:**  
   Enriched with behavioral, pricing, cuisine, and sensitivity features for deep personalization.
 - **Embeddings & Sharding:**  
-  All items are vectorized and stored in scalable shards.
+  All items are vectorized and stored in scalable shards. The link to the shards made during the project is : "https://drive.google.com/drive/folders/1yYOu3G_TZ9srSL8hK5-hdkgP7m9wUXic?usp=sharing"
 - **User Clustering:**  
   K++ Means trained clusters assign users to personas that guide ranking and filtering logic.
 
