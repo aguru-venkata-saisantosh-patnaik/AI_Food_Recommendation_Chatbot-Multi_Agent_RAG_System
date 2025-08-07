@@ -1,4 +1,5 @@
-# Cell 6: Intent Classification
+# Intent Classification
+
 from enum import Enum
 from typing import Dict, Optional, Tuple
 import logging
@@ -25,7 +26,7 @@ class OpenAIIntentClassifier:
         try:
             rate_limiter.wait_if_needed()
 
-            prompt = f"""
+            prompt = f'''
 You are an expert at understanding user intents in food recommendation conversations.
 Classify the user's message into one of these intents:
 - RECOMMEND: User wants food recommendations
@@ -41,7 +42,7 @@ INTENT: [intent_name]
 CONFIDENCE: [0-1]
 
 User message: "{utterance}"
-Classify this message:"""
+Classify this message:'''
 
             response_text = call_openai(prompt)
             print(response_text)
@@ -93,5 +94,3 @@ Classify this message:"""
 
         return IntentType.OTHER, 0.3
 
-print("✅ OpenAI Intent Classifier implemented")
-print("🎯 Supports both API and fallback classification")
