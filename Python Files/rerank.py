@@ -108,7 +108,6 @@ Analyze the conversation history and available documents. Return ONLY valid JSON
 
             # Parse JSON response
             parsed_result = self._parse_json_response(response_content, "Stage 1")
-            # parsed_result["raw_response"] = response_content
 
             input_doc_count = len(documents)
             evaluated_doc_count = len(parsed_result.get("document_evaluations", []))
@@ -257,7 +256,6 @@ Based on the contextual conditions and document evaluations from Stage 1, provid
             f_rating = metadata.get('f_rating', 0)
             f_price = metadata.get('f_price', 1000)
 
-            # Simple scoring: rating / (price/100)
             score = f_rating / max((f_price / 100), 1)
 
             scored_docs.append({
@@ -309,8 +307,3 @@ Based on the contextual conditions and document evaluations from Stage 1, provid
 
 
 
-
-# To use this code:
-# 1. Store your prompts as part1 and part2 variables (JSON versions above)
-# 2. Initialize: reranker = TwoStageContextualRerankerJSON()
-# 3. Call: result = reranker.rerank_with_context(all_docs, history_json_list)
