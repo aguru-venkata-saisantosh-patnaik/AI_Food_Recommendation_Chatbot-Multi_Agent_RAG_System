@@ -1,4 +1,4 @@
-# Cell 8: Query Enhancement and Filter Building (FIXED)
+# Query Enhancement and Filter Building
 
 import re
 import json
@@ -15,7 +15,7 @@ class OpenAIQueryEnhancer:
     """Enhanced query builder and slot extractor using OpenAI"""
 
     def __init__(self):
-        # Cuisine mapping from trail_2_gpu_succes.ipynb
+        # Cuisine mapping for filter building
         self.cuisine_mapping = {
             "beverages": ["beverages", "juices"],
             "chinese": ["chinese", "asian", "pan-asian", "oriental"],
@@ -142,7 +142,7 @@ class OpenAIQueryEnhancer:
 
         history_text = "\n".join(history_lines) if history_lines else "No previous conversation"
 
-        prompt = f"""
+        prompt = f'''
 You are a food search query refinement expert that structures user preferences into optimized search queries.
 
 Your goal is to structure the user's overall food preferences from conversation history into the request schema provided below.
@@ -292,7 +292,7 @@ text
 6. Return ONLY the JSON structure requested
 
 Focus on the user's FINAL preferences after all conversation turns!
-"""
+'''
         return prompt
 
     def _parse_refinement_response(self, response_text: str, fallback_query: str,
@@ -330,7 +330,7 @@ Focus on the user's FINAL preferences after all conversation turns!
             return {
                 "query": refined_query,
                 "filter": refined_filter,
-                "clarifying_questions": []  # Keep empty for compatibility
+                "clarifying_questions": []  
             }
 
         except Exception as e:
@@ -351,17 +351,17 @@ Focus on the user's FINAL preferences after all conversation turns!
 
     def _construct_semantic_query(self, filled_slots: Dict, intent: str) -> str:
         """FIXED: Construct semantic search query using cuisine_1, cuisine_2, item_name, and label"""
-        query_parts = []  # FIXED: Use query_parts consistently
+        query_parts = [] 
 
         # Primary & secondary cuisine
         if filled_slots.get("cuisine_1"):
-            query_parts.append(filled_slots["cuisine_1"])  # FIXED: was parts.append
+            query_parts.append(filled_slots["cuisine_1"]) 
         if filled_slots.get("cuisine_2") and filled_slots["cuisine_2"] != filled_slots.get("cuisine_1"):
-            query_parts.append(filled_slots["cuisine_2"])  # FIXED: was parts.append
+            query_parts.append(filled_slots["cuisine_2"]) 
 
         # Specific dish name
         if filled_slots.get("item_name"):
-            query_parts.append(filled_slots["item_name"])  # FIXED: was parts.append
+            query_parts.append(filled_slots["item_name"]) 
 
         # Label preferences (as requested - included in semantic search)
         if filled_slots.get("label"):
@@ -386,7 +386,7 @@ Focus on the user's FINAL preferences after all conversation turns!
             dietary_value = filled_slots["dietary"]
             filter_conditions.append({"dietary": {"$eq": dietary_value}})
 
-        # FIXED: Cuisine filter - handle both cuisine_1 and cuisine_2
+        # Cuisine filter - handle both cuisine_1 and cuisine_2
         cuisine_variants = []
         if filled_slots.get("cuisine_1"):
             cuisine1 = filled_slots["cuisine_1"].lower()
@@ -428,11 +428,10 @@ Focus on the user's FINAL preferences after all conversation turns!
             "label": "Any specific preferences (spicy, sweet, bestseller)?"
         }
 
-        for slot in missing_slots[:2]:  # Limit to 2 questions
+        for slot in missing_slots[:2]: 
             if slot in question_templates:
                 questions.append(question_templates[slot])
 
         return questions
 
-print("✅ OpenAI Query Enhancer implemented - FIXED")
-print("🔍 Semantic query construction and filter building ready")
+
