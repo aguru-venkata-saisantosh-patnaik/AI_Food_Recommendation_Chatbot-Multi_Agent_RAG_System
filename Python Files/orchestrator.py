@@ -1,4 +1,4 @@
-# orchestrator.py (updated sections)
+# orchestrator
 
 import yaml
 import logging
@@ -74,7 +74,6 @@ class RecommenderOrchestrator:
             print(rerank_res["top_10_documents"], '\n\n')
             print("ranking conditions:", rerank_res["ranking_conditions"])
 
-            #--------------------------------------------------------------------------------------------------------------------------------------------------------------
 
             # Track search but don't end conversation
             self.conv_agent.search_history.append({
@@ -100,15 +99,13 @@ class RecommenderOrchestrator:
         for ranked_doc in top_10_documents:
             doc_id = ranked_doc.get('doc_id', '')
 
-            # Find original document with full metadata
             original_doc = docs_lookup.get(doc_id)
 
             if original_doc:
                 # Create enriched document with ranking info + full metadata
                 enriched_doc = {
-                    **ranked_doc,  # Keep ranking info (rank, score, reasoning)
+                    **ranked_doc,  
                     "metadata": original_doc.get('metadata', {}),
-                    # Add any other fields from original doc you need
                 }
             else:
                 # Fallback if document not found
@@ -122,12 +119,12 @@ class RecommenderOrchestrator:
 
 
 
-    # Add this method to your existing orchestrator.py
+    # displaying progress bar in ui
     def handle_chat_with_progress_steps(self, user_message: str, recommendations_context: dict = None, progress_callback=None):
         """
     Modified handle_chat that calls progress_callback at each step
     """
-        # Step 1: Conversation handling (no progress needed - fast)
+    
         conv_response = self.conv_agent.handle_turn(user_message, recommendations_context)
     
         if conv_response["action"] in ("SEARCH", "SEARCH_READY"):
