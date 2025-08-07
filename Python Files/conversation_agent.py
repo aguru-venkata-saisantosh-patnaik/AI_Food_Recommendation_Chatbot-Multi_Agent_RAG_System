@@ -1,4 +1,4 @@
-#  Cell 9: FIXED Enhanced OpenAI Conversation Agent (Compatible Version)
+# OpenAI Conversation Agent
 
 from typing import Dict, Any
 from datetime import datetime
@@ -47,10 +47,9 @@ class OpenAIConversationAgent:
                 "filled_slots": self.memory.get_filled_slots()
             }
 
-            # Step 2.5: Handle slot updates based on intent type
+            # Step 3: Handle slot updates based on intent type
             slots_extracted = self.query_enhancer.extract_slots_from_message(user_utterance, context)
 
-            # 🔧 FIX: Add debugging to see what's happening
             user_intent = slots_extracted.get("user_intent", "slot_updation")
             print(f"🔍 DEBUG: Detected user_intent = '{user_intent}'")
             print(f"🔍 DEBUG: Type = {type(user_intent)}")
@@ -98,7 +97,7 @@ class OpenAIConversationAgent:
                 user_msg=user_utterance,
                 context_summary=self.memory.context_summary,
                 filled_slots=self.memory.get_filled_slots(),
-                question_history=self.questions_asked  # Only pass supported parameters
+                question_history=self.questions_asked 
             )
 
             # Step 6: Update question history
@@ -113,17 +112,17 @@ class OpenAIConversationAgent:
             )
             print()
 
-            # Step 8: Build complete response with continuous flow
+            # complete response with continuous flow
             complete_response = {
                 "action": action,
                 "response": response_data.get("response_text", "I'm here to help with delivery recommendations!"),
                 "next_questions": response_data.get("next_questions", []),
                 "slots_updated": updated_slots,
-                "all_slots": self.memory.display_all_slots(),  # Show all slots including nulls
+                "all_slots": self.memory.display_all_slots(),  
                 "intent": intent.value,
                 "confidence": confidence,
                 "conversation_turn": len(self.conversation_flow) + 1,
-                "conversation_continues": True  # Always continue conversation
+                "conversation_continues": True  
             }
 
         # removed search ready function from here
@@ -209,10 +208,8 @@ class OpenAIConversationAgent:
             "recommendations_shown": self.recommendations_shown,
             "search_history_count": len(self.search_history),
             "conversation_state": self.responder.conversation_state,
-            "conversation_flow": self.conversation_flow[-3:],  # Last 3 turns
+            "conversation_flow": self.conversation_flow[-3:], 
             "recent_questions": self.questions_asked[-3:] if self.questions_asked else []
         }
 
-print("✅ FIXED Enhanced OpenAI Conversation Agent with parameter compatibility")
-print("🔄 Compatible with existing ResponseGenerator interface")
-print("💬 Ready for continuous conversation flow without parameter errors")
+
