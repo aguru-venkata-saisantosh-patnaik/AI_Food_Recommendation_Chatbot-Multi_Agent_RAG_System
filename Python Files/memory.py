@@ -1,4 +1,4 @@
-# Cell 4: ConversationMemory Class (from conversation_gemini.ipynb)
+# ConversationMemory Class
 
 from typing import List, Dict, Any
 from dataclasses import dataclass, field
@@ -56,7 +56,6 @@ class ConversationMemory:
         for slot_name, new_value in new_slots.items():
             if slot_name != "user_intent" and new_value is not None:
                 self.slots[slot_name] = new_value
-                # Keep existing values for slots not mentioned
 
         logger.info(f"Updated slots preserving context: {self.slots}")
         return self.slots.copy()
@@ -127,8 +126,7 @@ class ConversationMemory:
         self.context_summary = ""
         logger.info("Conversation memory cleared")
 
-print("✅ ConversationMemory class defined")
-print("🧠 Memory management with slot tracking enabled")
+
 
 
 
