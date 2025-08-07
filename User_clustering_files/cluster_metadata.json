@@ -1,0 +1,142 @@
+[
+  {
+    "cluster_id": 0,
+    "persona_name": "Established Urban Professionals",
+    "cluster_size": 80,
+    "percentage_of_total": 24.46,
+    "avg_Age": -0.0822,
+    "avg_Monthly_Income": 0.0538,
+    "avg_Average_Rating": 3.976,
+    "avg_Average_Z_Score": -0.0076,
+    "avg_purchase_sensitivity": 2.675,
+    "avg_Gender": 0.5125,
+    "avg_weather": 1.2625,
+    "avg_Marital_Status": 0.55,
+    "avg_C_Type": 1.7625,
+    "avg_Veg_Ratio": 0.6424,
+    "Gender_distribution": {
+      "1": 0.5125,
+      "0": 0.4875
+    },
+    "weather_distribution": {
+      "2": 0.6,
+      "0": 0.3375,
+      "1": 0.0625
+    },
+    "Marital_Status_distribution": {
+      "1": 0.55,
+      "0": 0.45
+    },
+    "C_Type_distribution": {
+      "3": 0.3875,
+      "1": 0.225,
+      "0": 0.2,
+      "2": 0.1875
+    }
+  },
+  {
+    "cluster_id": 1,
+    "persona_name": "Premium Self-Employed Segment",
+    "cluster_size": 66,
+    "percentage_of_total": 20.18,
+    "avg_Age": -0.2032,
+    "avg_Monthly_Income": -0.1065,
+    "avg_Average_Rating": 4.0436,
+    "avg_Average_Z_Score": -0.0177,
+    "avg_purchase_sensitivity": 2.9848,
+    "avg_Gender": 0.3788,
+    "avg_weather": 1.3788,
+    "avg_Marital_Status": 0.3788,
+    "avg_C_Type": 13.3939,
+    "avg_Veg_Ratio": 0.5221,
+    "Gender_distribution": {
+      "0": 0.6212,
+      "1": 0.3788
+    },
+    "weather_distribution": {
+      "2": 0.6667,
+      "0": 0.2879,
+      "1": 0.0455
+    },
+    "Marital_Status_distribution": {
+      "0": 0.6212,
+      "1": 0.3788
+    },
+    "C_Type_distribution": {
+      "14": 0.2727,
+      "12": 0.2727,
+      "13": 0.2576,
+      "15": 0.197
+    }
+  },
+  {
+    "cluster_id": 2,
+    "persona_name": "Young Urban Students",
+    "cluster_size": 106,
+    "percentage_of_total": 32.42,
+    "avg_Age": -0.0112,
+    "avg_Monthly_Income": 0.0448,
+    "avg_Average_Rating": 4.0342,
+    "avg_Average_Z_Score": -0.0426,
+    "avg_purchase_sensitivity": 2.6132,
+    "avg_Gender": 0.4811,
+    "avg_weather": 1.0943,
+    "avg_Marital_Status": 0.4528,
+    "avg_C_Type": 5.434,
+    "avg_Veg_Ratio": 0.5334,
+    "Gender_distribution": {
+      "0": 0.5189,
+      "1": 0.4811
+    },
+    "weather_distribution": {
+      "2": 0.5283,
+      "0": 0.434,
+      "1": 0.0377
+    },
+    "Marital_Status_distribution": {
+      "0": 0.5472,
+      "1": 0.4528
+    },
+    "C_Type_distribution": {
+      "6": 0.3113,
+      "4": 0.2547,
+      "5": 0.2453,
+      "7": 0.1887
+    }
+  },
+  {
+    "cluster_id": 3,
+    "persona_name": "Price-Sensitive Employees",
+    "cluster_size": 75,
+    "percentage_of_total": 22.94,
+    "avg_Age": -0.0916,
+    "avg_Monthly_Income": 0.1498,
+    "avg_Average_Rating": 3.9636,
+    "avg_Average_Z_Score": -0.1365,
+    "avg_purchase_sensitivity": 3.04,
+    "avg_Gender": 0.36,
+    "avg_weather": 1.0533,
+    "avg_Marital_Status": 0.36,
+    "avg_C_Type": 9.8,
+    "avg_Veg_Ratio": 0.5232,
+    "Gender_distribution": {
+      "0": 0.64,
+      "1": 0.36
+    },
+    "weather_distribution": {
+      "2": 0.5067,
+      "0": 0.4533,
+      "1": 0.04
+    },
+    "Marital_Status_distribution": {
+      "0": 0.64,
+      "1": 0.36
+    },
+    "C_Type_distribution": {
+      "11": 0.3733,
+      "9": 0.2267,
+      "10": 0.2267,
+      "8": 0.1733
+    }
+  }
+]
