@@ -95,7 +95,7 @@ The **AI Food Recommendation Chatbot** is a sophisticated multi-agent system aim
 | `zomato_restaurant_data_cleaning.ipynb`| Cleans, standardizes and joins all food/restaurant data               |
 | `orchestrator.py`                    | Ties all agents together; runs config, workflow, and agent init       |
 | `utils.py`                           | Core enums, helper functions, configuration constants                 |
-| `app.py`                           | contains the frontend made with gradio and connects to the orchestrator                 |
+| `app.py`                           | Contains the frontend made with gradio and connects to the orchestrator                 |
 
 ## **How the Components Work Together**
 
