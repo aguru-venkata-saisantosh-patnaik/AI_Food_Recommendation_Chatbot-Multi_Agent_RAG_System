@@ -59,7 +59,7 @@ def show_history_details(selection):
             if orchestrator._format_timestamp(item["timestamp"]) in timestamp_line:
                 # Return complete JSON structure
                 formatted_json = json.dumps(item, indent=2, ensure_ascii=False)
-                return f"``````", ""
+                return formatted_json, ""
                 
     except Exception as e:
         return f"Error loading history details: {str(e)}", ""
