@@ -1,0 +1,3 @@
+shard_info_path: "./shard_data/shard_paths.txt"
+rerank_model: "gpt-4o-mini"
+top_k_per_shard: 5
