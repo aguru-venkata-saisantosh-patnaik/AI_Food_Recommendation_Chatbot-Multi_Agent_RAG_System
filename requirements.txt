@@ -1,0 +1,16 @@
+openai
+chromadb
+langchain
+langchain-chroma
+langchain-huggingface
+sentence-transformers
+gradio
+scikit-learn
+pandas
+numpy
+scipy
+pyyaml
+python-dotenv
+psutil
+torch
+transformers

@@ -1,122 +1,299 @@
-# AI Food Recommendation Chatbot: Multi-Agent RAG System
+# 🍽️ AI Food Recommendation Chatbot — Multi-Agent RAG System
 
-## **Project Overview**
+**A production-grade conversational AI system that delivers personalized food recommendations through multi-agent orchestration, sharded vector retrieval, and two-stage contextual reranking — built on OpenAI + ChromaDB + Gradio.**
 
-The **AI Food Recommendation Chatbot** is a sophisticated multi-agent system aimed at providing **personalized, context-aware food recommendations** through natural conversation. Built upon a Retrieval-Augmented Generation (RAG) paradigm, the system leverages advanced user modeling, conversational memory, semantic retrieval, and explainable reranking to optimize food suggestions for individual users. Its modular agents, robust data engineering, and user clustering ensure relevance, scalability, and adaptability for varying user behaviors and food contexts.
+> 3 specialized agents · 8 ChromaDB shards · GPT-4o-mini reranker · 4 user personas via K++ clustering · Gradio frontend · Sub-4-minute end-to-end response
 
-## **Workflow Overview**
-<img width="3840" height="2160" alt="Intent Classification" src="https://github.com/user-attachments/assets/9415d086-b89e-461c-8293-a528999797c6" />
+---
 
-### **Workflow Steps**
+## 📌 Table of Contents
 
-1. **User Input:**  
-   - Users engage the chatbot with food-related queries or preferences (e.g., “Show me spicy veg biryani under 300”).
+- [Project Overview](#-project-overview)
+- [Market Context & Problem](#-market-context--problem)
+- [System Architecture](#-system-architecture)
+- [Technical Pipeline](#-technical-pipeline)
+- [User Persona Clustering](#-user-persona-clustering)
+- [Key Technical Differentiators](#-key-technical-differentiators)
+- [Repository Structure](#-repository-structure)
+- [How to Run](#-how-to-run)
+- [API Key Setup](#-api-key-setup)
+- [Data Sources](#-data-sources)
+- [Demo](#-demo)
+- [Dependencies](#-dependencies)
 
-2. **Conversational Agent:**  
-   - **Intent Classification:** Determines the itent of the user like greeting, goodbye, preference updation, request for recommendation, specifying preference etc.
-   - **Slot Extraction:** Extracts structured information from the conversation (dietary, cuisine, dish, price, etc.).
-   - **Memory Updation:** Updates session memory to retain preferences and context.
+---
 
-3. **Sufficiency Check:**  
-   - Decides if enough info is available to generate recommendations.
-   - If not, the agent asks targeted follow-up questions.
+## 📖 Project Overview
 
-4. **Retrieval Agent:**  
-   - **Query Enhancer:** Transforms structured slots into robust search queries and filters.
-   - **Retrieval from Shards:** Performs semantic searches over sharded databases of food items.
+This system solves a real gap in food delivery platforms: existing recommenders are either rule-based (rigid, generic) or monolithic LLM assistants (slow, imprecise retrieval). This project builds a **modular multi-agent architecture** that combines the conversational fluency of LLMs with the speed and precision of sharded semantic search.
 
-5. **Reranking Agent:**  
-   - **Condition Generation & Evaluation:** Produces context-sensitive, explainable ranking rules based on the user’s food journey and menu diversity.
-   - **Evaluator & Top 10 Identifier:** Scores and explains top 10 results, ensuring the best fit and diversity.
+**The three-agent pipeline:**
+- **Conversational Agent** — detects intent, extracts slots (dietary, cuisine, price, dish), and manages multi-turn memory
+- **Retrieval Agent** — enhances queries via LLM and runs parallel semantic search across 8 ChromaDB shards
+- **Reranking Agent** — performs two-stage contextual reranking using GPT-4o-mini, with explainable condition generation and QA validation
 
-6. **Output:**  
-   - Presents recommendations or further clarifying questions to the user, looping until satisfaction.
+The system was developed and validated as part of a full case study on the Indian online food delivery market.
 
-## **Folder Description**
-- **Python Files:** This folder contains all the files related to running the program. Each part of the code is made in a modular way to make future changes easy.
-- **User_clustering_file:** This folder contains all the files related to the user clustering module (K++ means trained algorithm).
-- **Application:** This folder contains all the files related to the front-end made using gradio and its connection to the orchestrator.
-- **Data Cleaning and Feature Engineering:** This folder contains all the files related to the preprocessing of the datasets and the feature engineering.
-- **Embedding and Shards Creation:** This folder contains all the files related to embedding of the data and making of the shards. The link to the shards made is given at the end.
-- **Demo_final_compressed.mp4**: This is the demo video which contains the full run of the application showing 2 scenarios of various inputs.
-- **Case_presentation.pdf**: This is the presentation showcasing the importance, usability and findings of this project.
-- **Report.pdf**: This is the detailed report explaining the various technical aspects of this projects.
+---
 
-## **Solution Architecture**
+## 📊 Market Context & Problem
 
-### 1. **Conversational Agent**
-- **File:** `conversation_agent.py`
-  - **Intent Classification:** Uses LLMs and fallback pattern recognition (`intent_classifier.py`) to detect user goals.
-  - **Slot Extraction:** Employs prompt-based extraction plus robust rules (`slot_extract.py`, `query_enhancer.py`).
-  - **Memory Management:** Maintains stateful conversation context (`memory.py`).
-  - **Output:** A set of structured preferences and clear user intent, enabling smooth pipeline orchestration.
+![Market Challenges](images/market_challenges.png)
 
-### 2. **Recommendation Sufficiency Check**
-- **Embedded Logic:** In `conversation_agent.py`, checks for essential details (like dietary and price).
-- **Diagram Mapping:** The central diamond; if information is incomplete, prompts the user; otherwise, triggers retrieval and reranking.
+**The Indian online food delivery market** is projected to reach **USD 140.85 billion by 2030** (28.17% CAGR). Despite this scale, existing platforms face:
 
-### 3. **Retrieval Agent**
-- **Files:** `shards_retrieval.py`, (functions also exposed via `orchestrator.py`)
-  - **Query Refinement:** Structures and optimizes semantic queries using `query_enhancer.py`.
-  - **Sharded Retrieval:** Searches distributed ChromaDB shards via dense embeddings (`embeddings.py`), ensuring speed and scalability.
+- **2–5% conversion rates** — the industry average, indicating massive untapped potential
+- **30–40% monthly churn** — driven by poor personalization and irrelevant suggestions
+- **8–12 minute average ordering time** — a critical friction point in a fast-paced mobile-first market
 
-### 4. **Re-ranking Agent**
-- **Files:** `rerank.py`, `rerank_prompts.py`
-  - **Contextual Reranking:** Analyzes user journey, applies dynamic, explainable ranking/validation for top recommendations.
-  - **Explainability:** Outputs condition reasoning and QA, making the selection process transparent and defensible.
+This system directly addresses these pain points through intelligent, real-time, hyper-personalized recommendations.
 
-### 5. **Embeddings & Shard Creation**
-- **Files:** `embeddings.py`, `shards_creation.ipynb`
-  - **Embeddings:** Utilizes sentence-transformers to vectorize each food/menu item for semantic similarity.
-  - **Sharding:** Splits large databases into efficient “shards” for fast, parallel retrieval.
+---
 
-### 6. **User Clustering & Data Pre-processing**
-- **Files:** `user_clustering_agent.py`, `User_Clustering_agent.ipynb`, `derived_feature_engineering.ipynb`, `2-cuisines.ipynb`, `zomato_restaurant_data_cleaning.ipynb`
-  - **Clustering:** Segments users by behavior (demographics, purchases, cuisine affinity) using KMeans, making suggestions more relevant.
-  - **Preprocessing:** Cleans, normalizes, engineers features (e.g., veg ratio, price tiers), supporting robust recommendation logic and clustering.
+## 🏗️ System Architecture
 
-## **Deep Dive: What Each File Does**
+![Solution Architecture](images/solution_architecture.png)
 
-| File/Notebook                       | Role & Description                                                    |
-| -------------------------------------|-----------------------------------------------------------------------|
-| `conversation_agent.py`              | Controls user–system dialogue, slots/intents, memory, agent pipeline  |
-| `intent_classifier.py`               | LLM/fallback-based intent classification                              |
-| `slot_extract.py`                    | Extracts structured input slots from user text                        |
-| `memory.py`                          | Tracks all slots, conversation turns, dialogue state                  |
-| `response_generator.py`              | Crafts user-facing responses and active follow-ups                    |
-| `query_enhancer.py`                  | Refines and builds advanced queries and filters for retrieval         |
-| `shards_retrieval.py`                | Executes distributed, parallel semantic search via ChromaDB shards     |
-| `embeddings.py`                      | Handles embedding model setup and vector generation                   |
-| `shards_creation.ipynb`                     | Stepwise guide to generate embeddings and shard databases             |
-| `rerank.py`, `rerank_prompts.py`     | Contextual re-ranking and reasoning/validation logic                  |
-| `User_Clustering_agent.ipynb`        | Clustering model training/testing pipeline and User persona recognition for enhanced recommendations                           |
-| `derived_feature_engineering.ipynb`  | Data augmentation for features (ratios, groupings, etc.)              |
-| `2-cuisines.ipynb`                   | Cuisine feature merging and exploration                               |
-| `zomato_restaurant_data_cleaning.ipynb`| Cleans, standardizes and joins all food/restaurant data               |
-| `orchestrator.py`                    | Ties all agents together; runs config, workflow, and agent init       |
-| `utils.py`                           | Core enums, helper functions, configuration constants                 |
-| `app.py`                           | Contains the frontend made with gradio and connects to the orchestrator                 |
+The system is composed of three specialized agents, each optimized for a specific task:
 
-## **How the Components Work Together**
+### 1. Conversational Agent (`conversation_agent.py`)
+- **Intent Classification** — LLM-based detection of 7 intent types (recommend, filter_update, clarification, feedback, greeting, goodbye, other) with pattern-matching fallback
+- **Slot Extraction** — Structured extraction of dietary preference, cuisine (primary + secondary), dish name, and price range via prompt engineering (`slot_extract.py`)
+- **Memory Management** — Stateful multi-turn context tracking across the full session (`memory.py`)
+- **Sufficiency Check** — Gates retrieval: if slots are insufficient, the agent generates targeted follow-up questions
 
-- Conversations flow through the **Conversational Agent**, which extracts intent, slots, and maintains memory for multi-turn dialogues.
-- Once enough preferences are gathered, the **Retrieval Agent** turns these into optimized, context-rich search queries.
-- These queries search a semantic **vector DB** distributed in **shards** (for efficiency)—returning a candidate set of food items.
-- The **Re-ranking Agent** processes retrieved items, using the user’s session context, journey, and explainable conditions to select the most fitting top 10.
-- **User Clustering** and **engineered data features** guide personalization ensuring user traits, habits, and history are considered.
+### 2. Retrieval Agent (`shards_retrieval.py`, `query_enhancer.py`)
+- **Query Enhancement** — LLM converts structured slots into optimized semantic queries + ChromaDB metadata filters
+- **Sharded Retrieval** — Parallel semantic search across 8 distributed ChromaDB shards using `sentence-transformers/all-MiniLM-L6-v2` embeddings
+- **Top-K per Shard** — Configurable `top_k_per_shard = 5`, yielding a candidate set of up to 40 items per query
 
-## **Major Data & Model Preparation Steps**
+### 3. Reranking Agent (`rerank.py`, `rerank_prompts.py`)
+- **Stage 1 — Condition Generation:** GPT-4o-mini analyses the user's conversation history and generates context-sensitive ranking rules
+- **Stage 2 — Evaluation & QA:** Items are scored against the generated conditions; a QA pass validates the final top-10 selections
+- **Explainability:** Every recommendation comes with a plain-English rationale grounded in the user's session context
 
-- **Data Sources and cleaning:**
-   - Food Recommendation CSV (schemersays): "https://www.kaggle.com/datasets/schemersays/food-recommendation-system?select=1662574418893344.csv"
-   - Zomato Restaurants Dataset (bharathdevanaboina): "https://www.kaggle.com/datasets/bharathdevanaboina/zomato-restaurants-dataset/data"
-   - Zomato Database (anas123siddiqui): "https://www.kaggle.com/datasets/anas123siddiqui/zomato-database?select=restaurant.csv"
-  These Datasets are further cleaned, deduplicated, and joined for quality and reliability.
-- **Feature Engineering:**  
-  Enriched with behavioral, pricing, cuisine, and sensitivity features for deep personalization.
-- **Embeddings & Sharding:**  
-  All items are vectorized and stored in scalable shards. The link to the shards made during the project is : "https://drive.google.com/drive/folders/1yYOu3G_TZ9srSL8hK5-hdkgP7m9wUXic?usp=sharing"
-- **User Clustering:**  
-  K++ Means trained clusters assign users to personas that guide ranking and filtering logic.
+---
 
+## ⚙️ Technical Pipeline
 
+![Technical Pipeline](images/technical_pipeline.png)
+
+```
+User Input
+    │
+    ▼
+Conversational Agent
+    ├── Intent Classification (LLM + fallback patterns)
+    ├── Slot Extraction (dietary / cuisine / dish / price)
+    ├── Memory Update (multi-turn state)
+    └── Sufficiency Check ──► Ask follow-up if incomplete
+                │
+                ▼ (when slots are sufficient)
+Retrieval Agent
+    ├── Query Enhancement (LLM → semantic query + filters)
+    └── Sharded Retrieval (8 × ChromaDB shards, parallel)
+                │
+                ▼
+Reranking Agent
+    ├── Stage 1: Condition Generation (GPT-4o-mini)
+    ├── Stage 2: Evaluation + QA
+    └── Top-10 with Explainable Reasoning
+                │
+                ▼
+Gradio Frontend → User
+```
+
+**Key configuration** (`application/config.yaml`):
+```yaml
+rerank_model: "gpt-4o-mini"
+top_k_per_shard: 5
+shard_info_path: "./shard_data/shard_paths.txt"
+```
+
+**Agent performance metrics:**
+- Intent detection accuracy: **>90%**
+- Database shards: **8** (distributed ChromaDB)
+- End-to-end response time: **< 4 minutes**
+- Embedding model: `sentence-transformers/all-MiniLM-L6-v2`
+
+---
+
+## 👥 User Persona Clustering
+
+![User Personas](images/user_personas.png)
+
+Users are segmented into **4 distinct personas** using the **K++ Means algorithm** trained on 10+ behavioral features (age, income, dietary preferences, purchase sensitivity, location patterns, cuisine affinity). Cluster count was validated using the **Silhouette Method and Elbow Method**.
+
+| Persona | Share | Profile |
+|---|---|---|
+| Young Urban Students | **32.4%** | Price-conscious, diverse tastes, high digital adoption |
+| Established Urban Professionals | **24.5%** | Quality-focused, higher spending capacity |
+| Price-Sensitive Employees | **22.9%** | Budget-focused, convenience-seeking, efficiency-driven |
+| Premium Self-Employed | **20.2%** | Flexible schedules, premium preferences, experiential dining |
+
+Each cluster informs the reranking agent's condition generation, ensuring recommendations align not just with stated preferences but with behavioural patterns.
+
+---
+
+## 🔬 Key Technical Differentiators
+
+![Key Differentiators](images/key_differentiators.png)
+
+| Differentiator | Implementation |
+|---|---|
+| **Two-Stage Contextual Reranking** | LLM analyses full conversation history before generating ranking conditions — not just the last message |
+| **Multi-Agent Architecture** | Three specialized agents (Conversational, Retrieval, Reranking) each optimized for their specific task |
+| **Advanced User Clustering** | K++ means on 10+ behavioral features; 4 distinct personas for hyper-personalization |
+| **Real-Time Conversation State** | Full slot and intent state preserved across all turns via `ConversationMemory` |
+| **Smart Query Enhancement** | LLM rewrites slot data into semantic queries + structured ChromaDB filters for higher retrieval precision |
+| **Sharded Vector DB** | 8 ChromaDB shards enable fast parallel retrieval without a monolithic index bottleneck |
+
+---
+
+## 📁 Repository Structure
+
+```
+AI_Food_Recommendation_Chatbot/
+│
+├── Python Files/                          # Core agent modules
+│   ├── orchestrator.py                    # Ties all agents together; manages config and workflow
+│   ├── conversation_agent.py              # Intent, slot filling, memory, sufficiency check
+│   ├── intent_classifier.py              # LLM + fallback pattern-based intent classification
+│   ├── slot_extract.py                    # Structured slot extraction from user input
+│   ├── memory.py                          # Conversation state and multi-turn memory
+│   ├── response_generator.py             # User-facing response and follow-up generation
+│   ├── query_enhancer.py                 # LLM-based semantic query and filter builder
+│   ├── shards_retrieval.py               # Parallel semantic search across ChromaDB shards
+│   ├── embeddings.py                      # Embedding model setup (all-MiniLM-L6-v2)
+│   ├── rerank.py                          # Two-stage contextual reranking logic
+│   ├── rerank_prompts.py                 # Prompt templates for condition generation and QA
+│   └── utils.py                           # Enums, config constants, API key loader
+│
+├── application/
+│   ├── app.py                             # Gradio frontend — connects to orchestrator
+│   ├── config.yaml                        # Model config (rerank model, shard paths, top-k)
+│   └── req.txt                            # Full pinned dependency list
+│
+├── User_clustering_files/
+│   ├── User_Clustering_agent.ipynb       # K++ means training, Silhouette/Elbow validation
+│   └── ...
+│
+├── data cleaning and feature engineering/
+│   ├── derived_feature_engineering.ipynb # Behavioral feature engineering (ratios, tiers)
+│   ├── 2-cuisines.ipynb                   # Cuisine feature merging and exploration
+│   └── zomato_restaurant_data_cleaning.ipynb  # Data cleaning, deduplication, joins
+│
+├── embedding and shards creation/
+│   └── shards_creation.ipynb             # Embedding generation and ChromaDB shard build
+│
+├── images/                                # Case study visuals for this README
+├── demo_final_compressed.mp4             # Full end-to-end demo (2 scenarios)
+├── case_presentation.pdf                  # Case study presentation
+├── Report.pdf                             # Detailed technical report
+├── requirements.txt                       # Key dependencies (root level)
+└── README.md
+```
+
+---
+
+## 🚀 How to Run
+
+### Prerequisites
+- Python 3.10+
+- OpenAI API key (see [API Key Setup](#-api-key-setup))
+- ChromaDB shards downloaded from Google Drive (link below)
+
+### Steps
+
+1. **Clone the repository:**
+   ```bash
+   git clone https://github.com/aguru-venkata-saisantosh-patnaik/AI_Food_Recommendation_Chatbot-Multi_Agent_RAG_System.git
+   cd AI_Food_Recommendation_Chatbot-Multi_Agent_RAG_System
+   ```
+
+2. **Install dependencies:**
+   ```bash
+   pip install -r requirements.txt
+   ```
+
+3. **Download the pre-built ChromaDB shards** from Google Drive and place them at the path specified in `application/config.yaml`:
+   > [Download Shards (Google Drive)](https://drive.google.com/drive/folders/1yYOu3G_TZ9srSL8hK5-hdkgP7m9wUXic?usp=sharing)
+
+   After downloading, update `application/config.yaml` if needed:
+   ```yaml
+   shard_info_path: "./shard_data/shard_paths.txt"
+   ```
+
+4. **Set your OpenAI API key** — see [API Key Setup](#-api-key-setup) below.
+
+5. **Launch the app:**
+   ```bash
+   cd application
+   python app.py
+   ```
+
+6. The Gradio interface will open in your browser. Start with a natural language query like:
+   - *"Show me spicy veg biryani under ₹300"*
+   - *"I want something non-veg, South Indian, budget around ₹250"*
+
+> **Note:** Full execution (first response) takes under 4 minutes. Subsequent turns in the same session are faster due to cached memory and embeddings.
+
+---
+
+## 🔑 API Key Setup
+
+This project uses the **OpenAI API** for the conversational agent, query enhancer, and reranker (GPT-4o-mini).
+
+1. Get an API key at [platform.openai.com](https://platform.openai.com)
+2. Create a `.env` file in the `Python Files/` directory:
+   ```
+   OPENAI_API_KEY=your_api_key_here
+   ```
+3. The system loads it automatically via `python-dotenv` in `utils.py`.
+
+---
+
+## 📦 Data Sources
+
+| Dataset | Source | Usage |
+|---|---|---|
+| Food Recommendation CSV | [Kaggle — schemersays](https://www.kaggle.com/datasets/schemersays/food-recommendation-system) | Food item catalogue and user preference data |
+| Zomato Restaurants Dataset | [Kaggle — bharathdevanaboina](https://www.kaggle.com/datasets/bharathdevanaboina/zomato-restaurants-dataset/data) | Restaurant metadata, cuisines, pricing |
+| Zomato Database | [Kaggle — anas123siddiqui](https://www.kaggle.com/datasets/anas123siddiqui/zomato-database) | Extended restaurant and menu data |
+
+All datasets were cleaned, deduplicated, feature-engineered, embedded, and sharded before use. The pre-built shards are available via the Google Drive link above.
+
+---
+
+## 🎬 Demo
+
+A full end-to-end demo video (`demo_final_compressed.mp4`) is included in the repository, showcasing **2 complete user scenarios** — from initial greeting through multi-turn slot filling to final ranked recommendations.
+
+[▶ Watch Demo on GitHub](demo_final_compressed.mp4)
+
+---
+
+## 📦 Dependencies
+
+Key packages:
+
+```
+openai                    # GPT-4o-mini for conversational agent and reranker
+chromadb                  # Sharded vector database for semantic retrieval
+langchain-chroma          # LangChain-ChromaDB integration
+langchain-huggingface     # HuggingFace embeddings via LangChain
+sentence-transformers     # all-MiniLM-L6-v2 embedding model
+gradio                    # Web frontend
+scikit-learn              # K++ means user clustering
+pandas / numpy            # Data processing
+pyyaml                    # Config file management
+python-dotenv             # API key loading from .env
+psutil                    # Memory monitoring for embedding setup
+torch / transformers      # Model inference backend
+```
+
+Full pinned dependency list: [`application/req.txt`](application/req.txt)
+
+---
+
+*A multi-agent AI system built from first principles — modular, explainable, and grounded in real food delivery market dynamics.*
