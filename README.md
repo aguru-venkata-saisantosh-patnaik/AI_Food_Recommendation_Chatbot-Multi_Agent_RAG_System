@@ -110,6 +110,10 @@ top_k_per_shard: 5
 shard_info_path: "./shard_data/shard_paths.txt"
 ```
 
+**Detailed agent workflow diagram:**
+
+<img width="3840" height="2160" alt="Multi-Agent Workflow" src="https://github.com/user-attachments/assets/9415d086-b89e-461c-8293-a528999797c6" />
+
 **Agent performance metrics:**
 - Intent detection accuracy: **>90%**
 - Database shards: **8** (distributed ChromaDB)
