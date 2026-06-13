@@ -3,7 +3,6 @@
 **A production-grade conversational AI system that delivers personalized food recommendations through multi-agent orchestration, sharded vector retrieval, and two-stage contextual reranking — built on OpenAI + ChromaDB + Gradio.**
 
 > 3 specialized agents · 8 ChromaDB shards · GPT-4o-mini reranker · 4 user personas via K++ clustering · Gradio frontend · Sub-4-minute end-to-end response
-
 ---
 
 ## 📌 Table of Contents
